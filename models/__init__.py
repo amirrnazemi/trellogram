@@ -10,4 +10,4 @@ from config import MONGO_URI
 # تابع برای راه‌اندازی Beanie
 async def init_models():
     client = AsyncIOMotorClient(MONGO_URI)
-    await init_beanie(database=client.get_default_database(), document_models=[User])
+    await init_beanie(database=client.db_name, document_models=[User, Map_List, Map_Card])

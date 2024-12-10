@@ -1,7 +1,7 @@
 from beanie import Document
 from pydantic import Field
 
-class MapList(Document):
+class Map_List(Document):
     name: str = Field(..., description="Name of the list")
     trello_list_id: str = Field(..., description="Trello list ID")
     mapped_category: str = Field(..., description="Mapped category in the bot")
