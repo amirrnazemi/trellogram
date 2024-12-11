@@ -1,12 +1,5 @@
-from mongoengine import connect
 from motor.motor_asyncio import AsyncIOMotorClient
-from config import DATABASE_NAME, MONGO_URI
-
-
-async def connect_db():
-    
-    # اتصال به MongoDB
-    connect(DATABASE_NAME)
+from config import MONGO_URI
 
 
 def get_mongo_client() -> AsyncIOMotorClient:

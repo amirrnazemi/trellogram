@@ -13,13 +13,13 @@ from config import BOT_TOKEN
 from middlewares.auth_middleware import AuthMiddleware
 from handlers.unauth import unauth_router
 from handlers.auth import auth_router
-from services.db import connect_db, get_mongo_client
-
+from services.db import get_mongo_client
+from models import init_models
 
 async def main():
 
     # اتصال به دیتابیس
-    await connect_db()
+    await init_models()
 
     # راه‌اندازی ربات
     bot = Bot(token=BOT_TOKEN)
