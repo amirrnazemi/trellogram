@@ -9,7 +9,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.mongo import MongoStorage
 import asyncio
 
-from config import BOT_TOKEN
+from config import BOT_TOKEN, DATABASE_NAME
 from middlewares.auth_middleware import AuthMiddleware
 from handlers.unauth import unauth_router
 from handlers.auth import auth_router
@@ -18,15 +18,16 @@ from models import init_models
 
 async def main():
 
+    mongo_client = get_mongo_client()
+
     # اتصال به دیتابیس
-    await init_models()
+    await init_models(mongo_client)
 
     # راه‌اندازی ربات
     bot = Bot(token=BOT_TOKEN)
     
     # راه‌اندازی MongoStorage
-    mongo_client = get_mongo_client()
-    storage = MongoStorage(mongo_client)
+    storage = MongoStorage(mongo_client, db_name=DATABASE_NAME)
 
     dp = Dispatcher(storage=storage)
 
