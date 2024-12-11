@@ -1,7 +1,7 @@
 # test_beanie.py
 
 import asyncio
-from models.user import User, init_models
+from models import User, init_models
 
 async def main():
     # راه‌اندازی مدل‌ها و اتصال به دیتابیس
@@ -24,7 +24,7 @@ async def main():
         user2 = User(
             telegram_id="67890",
             trello_user_id="trello_456",
-            email="user1@example.com"  # همان ایمیل user1
+            email="user2@example.com"  # همان ایمیل user2
         )
         await user2.insert()
     except Exception as e:
