@@ -1,7 +1,7 @@
 # services/trello_service.py
 
 import aiohttp
-from config import TRELLO_API_KEY, TRELLO_TOKEN
+from config import TRELLO_API_KEY, TRELLO_TOKEN, TRELLO_BOARD_ID
 
 class TrelloClient:
     BASE_URL = "https://api.trello.com/1"
@@ -19,11 +19,8 @@ class TrelloClient:
             params.update(additional_params)
         return params
     
-    async def get_members(self, board_id: str = None):
-        if board_id:
-            url = f"{self.BASE_URL}/boards/{board_id}/members"
-        else:
-            url = f"{self.BASE_URL}/members/me/boards"
+    async def get_members(self, board_id: str = TRELLO_BOARD_ID):
+        url = f"{self.BASE_URL}/boards/{board_id}/members"
         async with aiohttp.ClientSession() as session:
             async with session.get(url, params=self._get_params()) as response:
                 response.raise_for_status()
