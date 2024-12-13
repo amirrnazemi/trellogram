@@ -17,12 +17,23 @@ unauth_router = Router()
 
 @unauth_router.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext,  **kwargs):
-    current_state = await state.get_state()
-    if not current_state:
-        await message.answer("لطفاً رمز عبور اولیه را وارد کنید:")
-        await state.set_state(RegistrationStates.waiting_for_password)
+    user : User = kwargs.get('user')
+    text = f'سلام {message.from_user.first_name}🙂 \n'
+    
+    if user:
+        text += f'شما قبلا ثبت نام کردی برای اینکه وارد داشبورد بشی از /dashboard استفاده کن.' 
+        await message.answer(text)
+        await state.clear() 
     else:
-        await message.answer("شما قبلاً ثبت‌نام کرده‌اید.")
+        current_state = await state.get_state()
+        if not current_state:
+            text += "لطفاً رمز عبور اولیه را وارد کنید:"
+            await message.answer(text)
+            await state.set_state(RegistrationStates.waiting_for_password)
+        else:
+            text += 'لطفا دوباره با /start شروع کن.'
+            await state.clear() 
+            await message.answer(text)
 
 @unauth_router.message(Command("restart"))
 async def cmd_start(message: types.Message, state: FSMContext,  **kwargs):
